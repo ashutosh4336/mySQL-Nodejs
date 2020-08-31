@@ -1,0 +1,23 @@
+{
+  "name": "nodemmysql",
+  "version": "1.0.0",
+  "description": "Nodejs With MySql",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "author": "Ashutosh Panda",
+  "license": "MIT",
+  "dependencies": {
+    "colors": "^1.4.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
