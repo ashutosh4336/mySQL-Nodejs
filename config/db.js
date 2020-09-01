@@ -1,3 +1,29 @@
+const Sequelize = require('sequelize');
+
+const sequelize = new Sequelize(
+  process.env.MYSQL_DBNAME,
+  process.env.MYSQL_USER,
+  process.env.MYSQL_PASSWORD,
+  {
+    dialect: 'mysql',
+    host: process.env.MYSQL_HOST,
+    charset: 'utf8',
+    query: {
+      raw: true,
+    },
+    // logging: false,
+    dialectOptions: {
+      dateStrings: true,
+      typeCast: true,
+    },
+    timezone: '+05:30', //for writing to database
+  },
+  console.log(`DB Connected on ${process.env.MYSQL_HOST}`.cyan.bold.underline)
+);
+
+module.exports = sequelize;
+
+/*
 const mysql = require('mysql2');
 
 const pool = mysql.createConnection(
@@ -13,11 +39,4 @@ const pool = mysql.createConnection(
 );
 
 module.exports = pool.promise();
-
-/*
-MYSQL_HOST=bxqk3vq6mniv7wceepqd-mysql.services.clever-cloud.com
-MYSQL_PORT=3306
-MYSQL_USER=u6samlswwfg1ulpk
-MYSQL_DBNAME=bxqk3vq6mniv7wceepqd
-MYSQL_PASSWORD=Mc8qn0qT7RwUnFovOlwu
 */

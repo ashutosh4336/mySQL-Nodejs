@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 
 // Import DB File & Connect
-// const db = require('./config/db');
+const sequelize = require('./config/db');
 
 // load routes
 const shop = require('./routes/shop');
@@ -25,13 +25,20 @@ app.use('/api/v1', shop);
 
 const PORT = process.env.PORT || 5000;
 
+// Sequelize Sync
+sequelize.sync(async (res) => {
+  try {
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 const server = app.listen(PORT, () =>
   console.log(
     `Server Started in Port ${process.env.PORT} on ${process.env.NODE_ENV} mode`
       .yellow.bold
   )
 );
-
 // Handle Unhandled Rejection
 process.on('unhandledRejection', (err, promise) => {
   console.log(`Error: ${err.message}`.red.bold);

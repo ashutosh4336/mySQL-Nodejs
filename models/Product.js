@@ -1,3 +1,46 @@
+const Sequelize = require('sequelize');
+
+const sequelize = require('../config/db');
+
+const Product = sequelize.define('product', {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    primaryKey: true,
+  },
+  title: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  price: {
+    type: Sequelize.DECIMAL,
+    allowNull: false,
+  },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  image_url: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+
+  createdAt: {
+    type: 'TIMESTAMP',
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false,
+  },
+  updatedAt: {
+    type: 'TIMESTAMP',
+    defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
+    allowNull: false,
+  },
+});
+
+module.exports = Product;
+
+/*
 const db = require('../config/db');
 
 module.exports = class Product {
@@ -30,3 +73,4 @@ module.exports = class Product {
     return db.execute(sqlQuery, [id]);
   }
 };
+*/
