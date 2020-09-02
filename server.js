@@ -11,6 +11,9 @@ const app = express();
 // Body Parser
 app.use(express.json());
 
+// Error Handler File
+const errorHandler = require('./middleware/error');
+
 // CORS
 app.use(cors());
 
@@ -30,10 +33,12 @@ app.use('/api/v1', shop);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 
-const PORT = process.env.PORT || 5000;
-
 // Sequelize Sync
 sequelize.sync(async (res) => {});
+
+app.use(errorHandler);
+
+const PORT = process.env.PORT || 5000;
 
 const server = app.listen(PORT, () =>
   console.log(

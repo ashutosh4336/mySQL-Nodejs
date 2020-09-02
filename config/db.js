@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
     query: {
       raw: true,
     },
-    // logging: false,
+    logging: false,
     dialectOptions: {
       dateStrings: true,
       typeCast: true,

@@ -1,86 +1,88 @@
 const Product = require('../models/Product');
+const asyncHandler = require('./async');
+const ErrorResponse = require('../utils/errorResponse');
 
 // @desc        Get all Listed Product
 // @route       GET api/v1/shop
 // @access      Private (Loggedin User)
 
-exports.getAllProductMethod = async (req, res, next) => {
-  try {
-    const allProduct = await Product.findAll();
-    res
-      .status(200)
-      .json({ code: 200, count: allProduct.length, data: allProduct });
-  } catch (err) {
-    console.log(err);
-  }
-};
+exports.getAllProductMethod = asyncHandler(async (req, res, next) => {
+  const allProduct = await Product.findAll();
+  res
+    .status(200)
+    .json({ code: 200, count: allProduct.length, data: allProduct });
+});
 
 // @desc        Get Single Product
 // @route       GET api/v1/shop/:id
 // @access      Public
 
-exports.getSingleProductMethod = async (req, res, next) => {
-  try {
-    const data = await Product.findByPk(req.params.id);
-    return res.status(200).json({ data: data });
-  } catch (err) {
-    console.log(err);
-  }
-};
+exports.getSingleProductMethod = asyncHandler(async (req, res, next) => {
+  const data = await Product.findByPk(req.params.id);
+  if (!data) return next(new ErrorResponse(`No Product Found`, 404));
+  return res.status(200).json({ data: data });
+});
 
 // @desc        Add Product
 // @route       POST api/v1/shop
 // @access      Private (Admin)
 
-exports.addProductMethod = async (req, res, next) => {
-  try {
-    const product = await Product.create({
-      title: req.body.title,
-      price: req.body.price,
-      description: req.body.description,
-      image_url: req.body.image_url,
-    });
-    res.status(200).json({ code: 201, product });
-  } catch (err) {
-    console.log(err);
-  }
-};
+exports.addProductMethod = asyncHandler(async (req, res, next) => {
+  const toBeAddedProduct = {
+    title: req.body.title,
+    price: req.body.price,
+    description: req.body.description,
+    image_url: req.body.image_url,
+  };
+  if (
+    !toBeAddedProduct.title ||
+    !toBeAddedProduct.price ||
+    !toBeAddedProduct.description ||
+    !toBeAddedProduct.image_url
+  )
+    return next(new ErrorResponse(`Provide the Required Fields`, 400));
+
+  const product = await Product.create({
+    title: toBeAddedProduct.title,
+    price: toBeAddedProduct.price,
+    description: toBeAddedProduct.description,
+    image_url: toBeAddedProduct.image_url,
+  });
+  res.status(200).json({ code: 201, product });
+});
 
 // @desc        Update Product
 // @route       PUT api/v1/shop/:id
 // @access      Private (Admin)
 
-exports.updateSingleProductMethod = async (req, res, next) => {
-  try {
-    const newProduct = {
-      title: req.body.title,
-      price: req.body.price,
-      description: req.body.description,
-      image_url: req.body.image_url,
-    };
+exports.updateSingleProductMethod = asyncHandler(async (req, res, next) => {
+  const newProduct = {
+    title: req.body.title,
+    price: req.body.price,
+    description: req.body.description,
+    image_url: req.body.image_url,
+  };
 
-    await Product.update(newProduct, {
-      where: { id: req.params.id },
-    });
+  await Product.update(newProduct, {
+    where: { id: req.params.id },
+  });
 
-    return res.status(200).json({ msg: 'Your Product has been Updated' });
-  } catch (err) {
-    console.log(err);
-  }
-};
+  return res.status(200).json({ msg: 'Your Product has been Updated' });
+});
 
 // @desc        Delete Product
 // @route       Delete api/v1/shop/:id
 // @access      Private (Admin)
 
-exports.deleteSingleProductMethod = async (req, res, next) => {
-  try {
-    await Product.destroy({
-      where: { id: req.params.id },
-    });
+exports.deleteSingleProductMethod = asyncHandler(async (req, res, next) => {
+  const data = await Product.findOne({ where: { id: req.params.id } });
 
-    return res.status(200).json({ msg: 'Your Product has been Deleted' });
-  } catch (err) {
-    console.log(err);
+  if (!data) {
+    return next(new ErrorResponse(`Product doesn't exist`, 404));
   }
-};
+
+  // console.log(data);
+  await Product.destroy({ where: { id: data.id } });
+
+  return res.status(200).json({ msg: 'Your Product has been Deleted' });
+});

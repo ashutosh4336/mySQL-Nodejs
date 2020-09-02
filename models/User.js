@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const sequelize = require('../config/db');
@@ -63,6 +64,12 @@ const User = sequelize.define(
   }
 );
 
+// HashPassword
+// hashPassword = async function (password) {
+//   const salt = await bcrypt.genSalt(10);
+//   return (user.password = await bcrypt.hash(password, salt));
+// };
+
 // Match User Entered password to hashed password in DB
 matchPassword = async function (enteredPassword, dbPassword) {
   return await bcrypt.compare(enteredPassword, dbPassword);
@@ -70,7 +77,6 @@ matchPassword = async function (enteredPassword, dbPassword) {
 
 // Sign JWT and return
 getSignedJwtToken = function (loggedInUser) {
-  //   console.log('ID', loggedInUser);
   return jwt.sign({ id: loggedInUser.id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_EXPIRE,
   });
