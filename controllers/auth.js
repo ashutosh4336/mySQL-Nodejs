@@ -45,10 +45,11 @@ exports.loginMethod = asyncHandler(async (req, res, next) => {
 exports.signUpMethod = asyncHandler(async (req, res, next) => {
   const user = {
     name: req.body.name,
+    username: req.body.username,
     email: req.body.email,
     password: req.body.password,
   };
-  if (!user.name || !user.email || !user.password)
+  if (!user.name || !user.email || !user.password || !user.username)
     return next(new ErrorResponse(`Provide the Required Fields`, 400));
 
   // Hash Password
@@ -62,6 +63,5 @@ exports.signUpMethod = asyncHandler(async (req, res, next) => {
     msg: 'User Registered',
     name: createdUser.name,
     email: createdUser.email,
-    role: createdUser.role,
   });
 });

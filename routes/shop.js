@@ -11,9 +11,9 @@ const {
 
 // router.get('/shop', getAllProduct);
 
-router.route('/shop').get(getAllProductMethod).post(addProductMethod);
+router.route('/').get(getAllProductMethod).post(addProductMethod);
 router
-  .route('/shop/:id')
+  .route('/:id')
   .get(getSingleProductMethod)
   .put(updateSingleProductMethod)
   .delete(deleteSingleProductMethod);

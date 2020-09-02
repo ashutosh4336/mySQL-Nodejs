@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Shraddha Kapoor",
+    "username": "shraddha4336",
+    "email": "shraddha@google.com",
+    "password": "123456789"
+  },
+  {
+    "name": "Ashutosh Panda",
+    "username": "ashutosh4336",
+    "email": "ashutosh@google.com",
+    "password": "123456789"
+  },
+  {
+    "name": "Deepika Panda",
+    "username": "deepika95",
+    "email": "deepika@google.com",
+    "password": "123456789"
+  },
+  {
+    "name": "Jhon Doe",
+    "username": "jhon4336",
+    "email": "jhon@google.com",
+    "password": "123456789"
+  },
+  {
+    "name": "Alice Green",
+    "username": "alice4336",
+    "email": "alice@google.com",
+    "password": "123456789"
+  },
+  {
+    "name": "Bob Smith  ",
+    "username": "bob4336",
+    "email": "bob@google.com",
+    "password": "123456789"
+  }
+]

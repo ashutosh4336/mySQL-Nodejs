@@ -1,15 +1,16 @@
 const ErrorResponse = require('../utils/errorResponse');
 
 const errorHandler = (err, req, res, next) => {
-  console.log('Somthing error ========> ');
+  // console.log('Somthing error ========> ');
 
   let error = { ...err };
 
   error.message = err.message;
 
   if (err.name === 'SequelizeUniqueConstraintError') {
-    const message = `something ashutsh123 `;
-    error = new ErrorResponse(message, 404);
+    // console.log(err.message);
+    const message = `${err.message}`;
+    error = new ErrorResponse(message, 400);
   }
 
   res

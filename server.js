@@ -29,7 +29,7 @@ const users = require('./routes/user');
 if (process.env.NODE_ENV === 'development') app.use(morgan('dev'));
 
 // Mount Routes
-app.use('/api/v1', shop);
+app.use('/api/v1/shop', shop);
 app.use('/api/v1/auth', auth);
 app.use('/api/v1/users', users);
 
