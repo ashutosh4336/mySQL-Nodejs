@@ -33,6 +33,7 @@ exports.addProductMethod = asyncHandler(async (req, res, next) => {
     price: req.body.price,
     description: req.body.description,
     image_url: req.body.image_url,
+    userId: req.user.id,
   };
   if (
     !toBeAddedProduct.title ||
@@ -47,8 +48,9 @@ exports.addProductMethod = asyncHandler(async (req, res, next) => {
     price: toBeAddedProduct.price,
     description: toBeAddedProduct.description,
     image_url: toBeAddedProduct.image_url,
+    userId: toBeAddedProduct.userId,
   });
-  res.status(200).json({ code: 201, product });
+  res.status(201).json({ code: 201, product });
 });
 
 // @desc        Update Product

@@ -9,6 +9,8 @@ const User = sequelize.define(
   {
     id: {
       type: Sequelize.INTEGER,
+      // type: Sequelize.UUID,
+      // defaultValue: DataTypes.UUIDV4,
       autoIncrement: true,
       allowNull: false,
       primaryKey: true,

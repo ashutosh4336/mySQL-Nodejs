@@ -52,6 +52,11 @@ exports.signUpMethod = asyncHandler(async (req, res, next) => {
   if (!user.name || !user.email || !user.password || !user.username)
     return next(new ErrorResponse(`Provide the Required Fields`, 400));
 
+  if (user.password.length < 6)
+    return next(
+      new ErrorResponse(`Password Must be at least 6 Characters Long`, 400)
+    );
+
   // Hash Password
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);

@@ -1,6 +1,8 @@
 const exppress = require('express');
 const router = exppress.Router();
 
+const { protect, authorize } = require('../middleware/auth');
+
 const {
   getAllProductMethod,
   addProductMethod,
@@ -11,7 +13,10 @@ const {
 
 // router.get('/shop', getAllProduct);
 
-router.route('/').get(getAllProductMethod).post(addProductMethod);
+router
+  .route('/')
+  .get(getAllProductMethod)
+  .post(protect, authorize('admin'), addProductMethod);
 router
   .route('/:id')
   .get(getSingleProductMethod)
